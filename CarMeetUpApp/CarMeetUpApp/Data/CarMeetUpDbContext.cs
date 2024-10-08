@@ -12,7 +12,6 @@ public class CarMeetUpDbContext : DbContext
     
     public virtual DbSet<Car> Cars { get; set; }
     public virtual DbSet<User> Users { get; set; }
-
     public virtual DbSet<Event> Events { get; set; }
     public virtual DbSet<EventSignUp> EventSignUps { get; set; }
 
