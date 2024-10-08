@@ -30,7 +30,7 @@ builder.Services.AddAuthentication(options =>
 .AddJwtBearer(options =>
 {
     options.Authority = "https://dev-5w5l8ake23bk7o4h.us.auth0.com/";  // Your Auth0 domain
-    options.Audience = "https://recipe-api.com";  // Your Auth0 API identifier
+    options.Audience = "https://careventapi";  // Your Auth0 API identifier
 });
 
 //AUTH ZERO
