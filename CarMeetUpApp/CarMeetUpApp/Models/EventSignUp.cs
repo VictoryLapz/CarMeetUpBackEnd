@@ -8,10 +8,10 @@ namespace CarMeetUpApp.Models
         public int EventId { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         [Required]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
     }
 }

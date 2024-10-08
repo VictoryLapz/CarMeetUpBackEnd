@@ -5,18 +5,17 @@ namespace CarMeetUpApp.Models;
 public class User
 {
    [Key]
-   int UserId { get; set; }
+   public int UserId { get; set; }
    [Required]
-   string FirstName { get; set; }
+   public string? FirstName { get; set; }
    [Required]
-   string LastName { get; set; }
+   public string? LastName { get; set; }
    [Required]
-   string Email { get; set; }
+   public string? Email { get; set; }
    [MaxLength(500)]
-   string Bio { get; set; }
+   public string? Bio { get; set; }
    [MaxLength(100)]
-   string CarInterests { get; set; }
-
+   public string? CarInterests { get; set; }
 
 }
 
