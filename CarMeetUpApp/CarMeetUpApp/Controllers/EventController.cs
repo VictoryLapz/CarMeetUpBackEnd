@@ -7,5 +7,7 @@ namespace CarMeetUpApp.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
+
+
     }
 }
