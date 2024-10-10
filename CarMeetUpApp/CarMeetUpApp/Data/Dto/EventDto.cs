@@ -19,5 +19,5 @@ public class EventDto
 
     public DateTime Date { get; set; }
 
-    public int Caption { get; set; }
+    public int Capacity { get; set; }
 }
