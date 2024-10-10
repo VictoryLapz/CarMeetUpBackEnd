@@ -2,7 +2,7 @@
 
 namespace CarMeetUpApp.Models
 {
-    public class Event
+    public class Event : AuditFields
     {
         [Key]
         public int EventId { get; set; }

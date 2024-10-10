@@ -7,15 +7,15 @@ public class EventDto
 {
     [Required]
     [MaxLength(100)]
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     [Required]
     [MaxLength(500)]
-    public string Location { get; set; }
+    public string? Location { get; set; }
 
     [Required]
     [MaxLength(500)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     public DateTime Date { get; set; }
 

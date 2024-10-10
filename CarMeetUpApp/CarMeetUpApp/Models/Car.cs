@@ -9,9 +9,9 @@ public class Car
     [Key]
     public int CarId { get; set; }
     [Required]
-    public string Make { get; set; }
+    public string? Make { get; set; }
     [Required]
-    public string Model { get; set; }
+    public string? Model { get; set; }
     [Required(ErrorMessage = "Value for Year must be between 1900 and 2025.")]
     [Range(0,9999)]
     public int Year { get; set; }
@@ -19,9 +19,8 @@ public class Car
     public FuelTypeEnum FuelType { get; set; }
     public TransmissionEnum TransmissionType { get; set; }
     [MaxLength(17)]
-    public string VIN { get; set; }
-    public string Color { get; set; }
-    //[ForeignKey("User")]
-    //public int userId { get; set; } (wishlist item)
+    public string? VIN { get; set; }
+    public string? Color { get; set; }
+ 
  
 }
