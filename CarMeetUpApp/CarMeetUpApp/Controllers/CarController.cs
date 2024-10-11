@@ -1,4 +1,7 @@
 ﻿using CarMeetUpApp.Data;
+using CarMeetUpApp.Data.Dto;
+using CarMeetUpApp.Mapper;
+
 using CarMeetUpApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,67 +20,71 @@ public class CarController : ControllerBase
         _carMeetUpDb = carMeetUpDb;
     }
 
-    //search ALL cars in Db
+    //search cars in Db
     [HttpGet]
-    public async Task<IActionResult> SearchCars([FromQuery] string Car)
+    public async Task<IActionResult> SearchCars([FromQuery] string car)
     {
         IQueryable<Car> query = _carMeetUpDb.Cars;
-
+        
+        if (!string.IsNullOrEmpty(car))
+        {
+            query = query.Where(c => c.Make.Contains(car) || c.Model.Contains(car));
+        }
+        
         return Ok(await query.ToListAsync());
     }
 
     //add a car
     [HttpPost]
-    public async Task<IActionResult> AddCar([FromBody] Car car)
+    public async Task<IActionResult> AddCar([FromBody] CarDto carDto)
     {
-        Car newCar = new Car();
+        Car cars = new Car
+        {
+            Make = carDto.Make,
+            Model = carDto.Model,
+            Year = carDto.Year,
+            CarType = carDto.CarType, //enum1
+            FuelType = carDto.FuelType, //enum2
+            TransmissionType = carDto.TransmissionType, //enum3
+            Color = carDto.Color,
+        };
 
-        newCar.Make = car.Make;
-        newCar.Model = car.Model;
-        newCar.Year = car.Year;
-        newCar.CarType = car.CarType; //enum1
-        newCar.FuelType = car.FuelType; //enum2
-        newCar.TransmissionType = car.TransmissionType; //enum3
-        newCar.VIN = car.VIN;
-        newCar.Color = car.Color;
+        await _carMeetUpDb.AddAsync(cars);
+        await _carMeetUpDb.SaveChangesAsync();
 
-        _carMeetUpDb.AddAsync(newCar);
-        _carMeetUpDb.SaveChangesAsync();
-
-        var createdCars = _carMeetUpDb.Cars.ToList();
-
-        return Ok(newCar); //CreatedAtAct
+        return Ok(cars);
     }
 
     //update an existing car by ID
-
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCar(int Id, [FromBody] Car car)
+    public async Task<IActionResult> UpdateCar([FromBody] CarDto carDtoUp, int id)
     {
-        var carUpdateCar = _carMeetUpDb.Cars.Find(Id);
-        if (carUpdateCar == null)
+        if (!ModelState.IsValid)
         {
-            return NotFound("Car Not Found");
+            return BadRequest(ModelState);
         }
 
-        carUpdateCar.Make = car.Make;
-        carUpdateCar.Model = car.Model;
-        carUpdateCar.Year = car.Year;
-        carUpdateCar.CarType = car.CarType; //enum1
-        carUpdateCar.FuelType = car.FuelType; //enum2
-        carUpdateCar.TransmissionType = car.TransmissionType; //enum3
-        carUpdateCar.VIN = car.VIN;
-        carUpdateCar.Color = car.Color;
+        var cars = await _carMeetUpDb.Cars.FindAsync(id);
+        
+        if (cars == null)
+        {
+            return NotFound();
+        }
+        cars.Make = carDtoUp.Make;
+        cars.Model = carDtoUp.Model;
+        cars.Year = carDtoUp.Year;
+        cars.CarType = carDtoUp.CarType;
+        cars.FuelType = carDtoUp.FuelType;
+        cars.TransmissionType = carDtoUp.TransmissionType;
+        cars.Color = carDtoUp.Color;
 
+        _carMeetUpDb.Cars.Update(cars);
+        await _carMeetUpDb.SaveChangesAsync();
 
-        _carMeetUpDb.Cars.Update(carUpdateCar);
-        _carMeetUpDb.SaveChangesAsync();
-
-        return Ok(carUpdateCar);
+        return Ok(cars);
     }
 
     //delete a car by ID
-
     [HttpDelete("{id}")]
 
     public async Task<IActionResult> DeleteCar(int Id)
@@ -89,7 +96,7 @@ public class CarController : ControllerBase
             return NotFound("Car Not Found");
         }
         _carMeetUpDb.Users.Remove(deleteCar);
-        _carMeetUpDb.SaveChangesAsync();
+        await _carMeetUpDb.SaveChangesAsync();
 
         return NoContent(); //204 
     }
