@@ -1,7 +1,10 @@
 ﻿using CarMeetUpApp.Data;
 using CarMeetUpApp.Models;
+using CarMeetUpApp.Mapper;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CarMeetUpApp.Data.Dto;
 
 namespace CarMeetUpApp.Controllers;
 
@@ -18,56 +21,61 @@ public class UserController : ControllerBase
 
     //register a new user 
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] User user)
+    public async Task<IActionResult> Register([FromBody] UserDto userDto)
     {
-        User newUser = new User();
+        User users = new User
+        {
+            FirstName = userDto.FirstName,
+            LastName = userDto.LastName, 
+            Email = userDto.Email,
+            Bio = userDto.Bio,
+            CarInterests = userDto.CarInterests,
+        };
 
-        newUser.FirstName = user.FirstName;
-        newUser.LastName = user.LastName;
-        newUser.Email = user.Email;
-        newUser.Bio = user.Bio;
-        newUser.CarInterests = user.CarInterests;
+        await _carMeetUpDb.AddAsync(users);
+        await _carMeetUpDb.SaveChangesAsync();
 
-
-        _carMeetUpDb.AddAsync(newUser);
-        _carMeetUpDb.SaveChanges();
-
-        return Ok(newUser); //CreatedAtAction() for later 
+        return Ok(users); 
     }
 
     //updates existing user by Id 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProfile(int Id, [FromBody] User user)
+    public async Task<IActionResult> UpdateProfile([FromBody] UserDto userDtouUp, int id)
     {
-        var userUpdate = _carMeetUpDb.Users.Find(Id); 
-        if (userUpdate == null)
+        if (!ModelState.IsValid)
         {
-            return NotFound("User Not Found");
+            return BadRequest(ModelState);
         }
 
-        userUpdate.FirstName = user.FirstName;
-        userUpdate.LastName = user.LastName;
-        userUpdate.Email = user.Email;
-        userUpdate.Bio = user.Bio;
-        userUpdate.CarInterests = user.CarInterests;
+        var users = await _carMeetUpDb.Users.FindAsync(id); 
+        if (users == null)
+        {
+            return NotFound();
+        }
+        users.FirstName = userDtouUp.FirstName;
+        users.LastName = userDtouUp.LastName;
+        users.Email = userDtouUp.Email;
+        users.Bio = userDtouUp.Bio;
+        users.CarInterests = userDtouUp.CarInterests;
 
-        _carMeetUpDb.Users.Update(userUpdate);
-        _carMeetUpDb.SaveChangesAsync();
+        _carMeetUpDb.Users.Update(users);
+        await _carMeetUpDb.SaveChangesAsync();
 
-        return Ok(userUpdate);
+        return Ok(users);
     }
+
     //deletes existing user by Id
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProfile(int Id)
+    public async Task<IActionResult> DeleteProfile(int id)
     {
-        var deleteUser = _carMeetUpDb.Users.Find(Id);
+        var deleteUser = _carMeetUpDb.Users.Find(id);
 
         if (deleteUser == null)
         {
             return NotFound("User Not Found");
         }
         _carMeetUpDb.Users.Remove(deleteUser);
-        _carMeetUpDb.SaveChangesAsync();
+        await _carMeetUpDb.SaveChangesAsync();
 
         return NoContent(); //204 
     }
