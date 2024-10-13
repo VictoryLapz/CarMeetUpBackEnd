@@ -1,7 +1,6 @@
 ﻿using CarMeetUpApp.Data;
 using CarMeetUpApp.Data.Dto;
 using CarMeetUpApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,7 @@ namespace CarMeetUpApp.Controllers;
 [ApiController]
 public class EventSignUpController : ControllerBase
 {
-    private CarMeetUpDbContext _carmeetupDbContext;
+    private readonly CarMeetUpDbContext _carmeetupDbContext;
 
     public EventSignUpController(CarMeetUpDbContext carmeetupDbContext)
     {
@@ -31,9 +30,9 @@ public class EventSignUpController : ControllerBase
                      select new EventSignUpDto
                      {
                          EventId = signUp.EventId,
-                         EventName = m != null ? m.Title : "Unknown Event",
-                         EventDescription = m != null ? m.Description : "No Description",
-                         EventLocation = m != null ? m.Location : "Unknown Location",
+                         EventName = m != null ? m.Title : "Unknown Event", //returns this if there is no event for specfied id
+                         EventDescription = m != null ? m.Description : "No Description", //returns this if there is no event for specfied id
+                         EventLocation = m != null ? m.Location : "Unknown Location", //returns this if there is no event for specfied id
                          EventTime = m != null ? m.Date : DateTime.MinValue
                      };
 
@@ -51,13 +50,11 @@ public class EventSignUpController : ControllerBase
             return BadRequest(ModelState);
         }
 
-
         var newSignUp = new EventSignUp
         {
             UserId = eventSignUp.UserId,
             EventId = eventSignUp.EventId
         };
-
         _carmeetupDbContext.Add(newSignUp);
         await _carmeetupDbContext.SaveChangesAsync();
 
@@ -74,7 +71,6 @@ public class EventSignUpController : ControllerBase
         {
             return NotFound();
         }
-
         _carmeetupDbContext.EventSignUps.Remove(signUpEntity);
         await _carmeetupDbContext.SaveChangesAsync();
 

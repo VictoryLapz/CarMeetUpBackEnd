@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarMeetUpApp.Migrations
 {
     [DbContext(typeof(CarMeetUpDbContext))]
-    [Migration("20241010014253_Initial")]
+    [Migration("20241013201541_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,19 +27,37 @@ namespace CarMeetUpApp.Migrations
 
             modelBuilder.Entity("CarMeetUpApp.Models.Car", b =>
                 {
-                    b.Property<int>("CarId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarType")
+                    b.Property<int>("CityMpg")
                         .HasColumnType("int");
 
-                    b.Property<string>("Color")
+                    b.Property<string>("Class")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FuelType")
+                    b.Property<int>("CombinationMpg")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cylinders")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Displacement")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Drive")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FuelType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HighwayMpg")
                         .HasColumnType("int");
 
                     b.Property<string>("Make")
@@ -50,17 +68,14 @@ namespace CarMeetUpApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransmissionType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VIN")
-                        .HasMaxLength(17)
-                        .HasColumnType("nvarchar(17)");
+                    b.Property<string>("Transmission")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("CarId");
+                    b.HasKey("Id");
 
                     b.ToTable("Cars");
                 });
