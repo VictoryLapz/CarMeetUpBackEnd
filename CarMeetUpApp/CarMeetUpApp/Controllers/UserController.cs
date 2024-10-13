@@ -1,8 +1,5 @@
 ﻿using CarMeetUpApp.Data;
 using CarMeetUpApp.Models;
-using CarMeetUpApp.Mapper;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CarMeetUpApp.Data.Dto;
 

@@ -15,20 +15,24 @@ namespace CarMeetUpApp.Migrations
                 name: "Cars",
                 columns: table => new
                 {
-                    CarId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CityMpg = table.Column<int>(type: "int", nullable: false),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CombinationMpg = table.Column<int>(type: "int", nullable: false),
+                    Cylinders = table.Column<int>(type: "int", nullable: false),
+                    Displacement = table.Column<double>(type: "float", nullable: false),
+                    Drive = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FuelType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HighwayMpg = table.Column<int>(type: "int", nullable: false),
                     Make = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    CarType = table.Column<int>(type: "int", nullable: false),
-                    FuelType = table.Column<int>(type: "int", nullable: false),
-                    TransmissionType = table.Column<int>(type: "int", nullable: false),
-                    VIN = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Transmission = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cars", x => x.CarId);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

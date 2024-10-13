@@ -1,10 +1,7 @@
 ﻿using CarMeetUpApp.Data;
 using CarMeetUpApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CarMeetUpApp.Mapper;
-
-using CarMeetUpApp.Models;
 using CarMeetUpApp.Data.Dto;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,14 +11,13 @@ namespace CarMeetUpApp.Controllers
     [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
-        private CarMeetUpDbContext _carmeetupDB;
+        private readonly CarMeetUpDbContext _carmeetupDB;
 
         public EventController(CarMeetUpDbContext carmeetupDbContext)
         {
             _carmeetupDB = carmeetupDbContext;
         }
 
-        // GET: api/Event
         [HttpGet]
         public async Task<IActionResult> GetAllEvents()
         {
@@ -32,7 +28,6 @@ namespace CarMeetUpApp.Controllers
             return Ok(eventDtos);
         }
 
-        // GET: api/Event/2
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEventById(int id)
         {
@@ -46,7 +41,6 @@ namespace CarMeetUpApp.Controllers
             return Ok(events.ToDto());
         }
 
-        // DELETE: api/Event/2
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
@@ -63,7 +57,6 @@ namespace CarMeetUpApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Event
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] EventDto eventDto)
         {
@@ -84,7 +77,7 @@ namespace CarMeetUpApp.Controllers
             return Ok(newEvent);
         }
 
-        // PUT: api/Event/2
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEvent([FromBody,] EventDto dto, int id)
         {
