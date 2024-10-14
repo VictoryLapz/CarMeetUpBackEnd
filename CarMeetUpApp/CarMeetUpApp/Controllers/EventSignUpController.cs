@@ -8,7 +8,7 @@ namespace CarMeetUpApp.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class EventSignUpController : ControllerBase
+public class EventSignUpController : ApiBaseController
 {
     private readonly CarMeetUpDbContext _carmeetupDbContext;
 

@@ -24,7 +24,7 @@ builder.Services.AddDbContext<CarMeetUpDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.AddScoped<ApiService>(); // neede d in order to grab the service from the services folder and allow connection
+builder.Services.AddScoped<ApiService>(); // neede  in order to grab the service from the services folder and allow connection
 
 builder.Services.AddCors(options =>
 {
@@ -45,7 +45,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.Authority = "https://dev-5w5l8ake23bk7o4h.us.auth0.com/";  // Your Auth0 domain
+    options.Authority = "https://dev-jm6hvg0klmxse04f.us.auth0.com/";  // Your Auth0 domain
     options.Audience = "https://careventapi";  // Your Auth0 API identifier
 });
 
