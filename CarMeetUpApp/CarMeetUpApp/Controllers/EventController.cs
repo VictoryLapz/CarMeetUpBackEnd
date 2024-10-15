@@ -62,7 +62,7 @@ public class EventController : ApiBaseController
     [HttpPost]
     public async Task<IActionResult> CreateEvent([FromBody] EventDto eventDto)
     {
-       
+
         Event newEvent = new Event
         {
             Title = eventDto.Title,
@@ -70,8 +70,8 @@ public class EventController : ApiBaseController
             Date = eventDto.Date,
             Description = eventDto.Description,
             Capacity = eventDto.Capacity,
+            CarId = eventDto.CarId, 
             CreatedBy = GetCurrentUserID(),
-
         };
 
         _carmeetupDB.Events.Add(newEvent);
@@ -84,7 +84,6 @@ public class EventController : ApiBaseController
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEvent([FromBody,] EventDto dto, int id)
     {
-
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -97,17 +96,43 @@ public class EventController : ApiBaseController
             return NotFound();
         }
 
+
         events.Title = dto.Title;
         events.Location = dto.Location;
         events.Date = dto.Date;
         events.Description = dto.Description;
         events.Capacity = dto.Capacity;
-
-
+        events.CarId = dto.CarId; 
+        events.UpdatedBy = GetCurrentUserID();
 
         _carmeetupDB.Events.Update(events);
         await _carmeetupDB.SaveChangesAsync();
 
         return Ok(events.ToDto());
+    }
+
+
+    [HttpGet("Search by Make")] 
+    public async Task<IActionResult> SearchByCarMake(string make)
+    {
+        // Check if the make parameter is provided
+        if (string.IsNullOrEmpty(make))
+        {
+            return BadRequest("Car make is required.");
+        }
+
+ 
+        var events = await _carmeetupDB.Events
+            .Include(e => e.CarSearch) 
+            .Where(e => e.CarSearch.Make.ToLower() == make.ToLower()) 
+            .ToListAsync();
+
+     
+        if (events == null || events.Count == 0)
+        {
+            return NotFound("No events found for the specified car make.");
+        }
+
+        return Ok(events.Select(e => e.ToDto())); 
     }
 }

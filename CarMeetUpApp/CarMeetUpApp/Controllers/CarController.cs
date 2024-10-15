@@ -130,6 +130,15 @@ namespace CarMeetUpApp.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+
+        // added this so when we tackle frontend the user can have a "drop down to select a car make"
+        [HttpGet("CarMakes")]
+        public async Task<ActionResult<IEnumerable<string>>> GetCarMakes()
+        {
+            var carMakes = await _context.Cars.Select(c => c.Make).Distinct().ToListAsync();
+            return Ok(carMakes);
+        }
     }
 }
     
