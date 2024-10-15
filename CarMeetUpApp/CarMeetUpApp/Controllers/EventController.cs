@@ -112,7 +112,7 @@ public class EventController : ApiBaseController
     }
 
 
-    [HttpGet("Search by Make")] 
+    [HttpGet("SearchbyMake")] 
     public async Task<IActionResult> SearchByCarMake(string make)
     {
         // Check if the make parameter is provided
