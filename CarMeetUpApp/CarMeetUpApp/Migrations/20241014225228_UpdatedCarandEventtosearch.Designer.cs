@@ -4,6 +4,7 @@ using CarMeetUpApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarMeetUpApp.Migrations
 {
     [DbContext(typeof(CarMeetUpDbContext))]
-    partial class CarMeetUpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241014225228_UpdatedCarandEventtosearch")]
+    partial class UpdatedCarandEventtosearch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

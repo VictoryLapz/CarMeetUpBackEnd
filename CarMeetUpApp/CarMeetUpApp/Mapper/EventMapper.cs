@@ -1,6 +1,8 @@
 ﻿using CarMeetUpApp.Models;
 using CarMeetUpApp.Data.Dto;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using CarMeetUpApp.Controllers;
 
 namespace CarMeetUpApp.Mapper;
 
@@ -30,7 +32,8 @@ public static class EventMapper
         Location = updateEventDto.Location,
         Description = updateEventDto.Description,
         Date = updateEventDto.Date,
-        Capacity = updateEventDto.Capacity
+        Capacity = updateEventDto.Capacity,
+        CarId = updateEventDto.CarId
     };
 }
 

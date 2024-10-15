@@ -21,6 +21,12 @@ namespace CarMeetUpApp.Models
 
         [Range(1, 10000)]
         public int Capacity { get; set; }
+
+        // this will be the foreign key
+        public int CarId { get; set; }
+
+        // this will be used to connect above foreign key to the car table/model
+        public Car? CarSearch { get; set; }
     }
 }
 
