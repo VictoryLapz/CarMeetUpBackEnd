@@ -102,7 +102,6 @@ public class EventController : ApiBaseController
         events.Date = dto.Date;
         events.Description = dto.Description;
         events.Capacity = dto.Capacity;
-        events.CarId = dto.CarId; 
         events.UpdatedBy = GetCurrentUserID();
 
         _carmeetupDB.Events.Update(events);

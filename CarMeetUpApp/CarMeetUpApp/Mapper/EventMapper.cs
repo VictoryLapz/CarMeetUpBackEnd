@@ -33,6 +33,7 @@ public static class EventMapper
         Description = updateEventDto.Description,
         Date = updateEventDto.Date,
         Capacity = updateEventDto.Capacity,
+        CarId = updateEventDto.CarId
     };
 }
 
