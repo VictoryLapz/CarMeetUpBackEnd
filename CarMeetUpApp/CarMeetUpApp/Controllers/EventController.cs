@@ -83,7 +83,7 @@ public class EventController : ApiBaseController
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEvent([FromBody,] EventDto dto, int id)
-    {
+    { 
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
