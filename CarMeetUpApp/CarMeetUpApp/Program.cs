@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4000", "https://careventmeetup.z13.web.core.windows.net/") //cors will allow local host OR Azure to use back end
+            builder.WithOrigins("http://localhost:4200", "https://careventmeetup.z13.web.core.windows.net/") //cors will allow local host OR Azure to use back end
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });

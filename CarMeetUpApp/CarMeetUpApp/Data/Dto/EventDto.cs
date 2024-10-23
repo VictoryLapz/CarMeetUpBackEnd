@@ -5,6 +5,7 @@ namespace CarMeetUpApp.Data.Dto;
 
 public class EventDto
 {
+    public int EventId { get; set; }
     [Required]
     [MaxLength(100)]
     public string? Title { get; set; }
