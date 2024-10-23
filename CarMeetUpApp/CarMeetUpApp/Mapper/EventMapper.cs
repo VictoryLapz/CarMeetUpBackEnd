@@ -10,6 +10,7 @@ public static class EventMapper
 {
     public static EventDto ToDto(this Event eventItem) => new()
     {
+        EventId = eventItem.EventId,
         Title = eventItem.Title,
         Location = eventItem.Location,
         Description = eventItem.Description,
